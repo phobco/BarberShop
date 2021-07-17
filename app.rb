@@ -39,6 +39,10 @@ get '/contacts' do
   erb :contacts
 end
 
+get '/barber/:id' do
+  erb :barber
+end
+
 post '/visit' do
 
   @c = Client.new params[:client]
@@ -60,3 +64,4 @@ post '/contacts' do
      erb :contacts
    end
 end
+
