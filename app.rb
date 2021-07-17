@@ -17,6 +17,8 @@ class Barber < ActiveRecord::Base
 end
 
 class Contact < ActiveRecord::Base
+  validates :mail, presence: true
+  validates :message, presence: true
 end
 
 before do
@@ -28,27 +30,33 @@ get '/' do
 end
 
 get '/visit' do
+  @c = Client.new
   erb :visit
 end
 
 get '/contacts' do
+  @c = Contact.new
   erb :contacts
 end
 
 post '/visit' do
 
-  c = Client.new params[:client]
-  if c.save
+  @c = Client.new params[:client]
+  if @c.save
     erb "<h2>Спасибо, вы записались!</h2>"
   else
-    erb "<h2>Ошибка!</h2>"
+    @error = @c.errors.full_messages.first
+    erb :visit
   end
   end
 
 post '/contacts' do
    
-   c = Contact.new params[:contact]
-   c.save
-
-  erb "<h2>Готово!</h2>"
+   @c = Contact.new params[:contact]
+   if @c.save
+     erb "<h2>Готово!</h2>"
+   else
+     @error = @c.errors.full_messages.first
+     erb :contacts
+   end
 end
