@@ -3,11 +3,11 @@
 <form action="/contacts" method="POST">
   <div class="form-group">
     <label>Введите e-mail:</label>
-    <input name="email" type="text" class="form-control" placeholder="example@examle.com" value="<%= @email %>">
+    <input name="contact[mail]" type="text" class="form-control" placeholder="example@examle.com" value="<%= @email %>">
   </div>
   <div class="form-group">
     <label>Сообщение:</label>
-    <textarea name="message" class="form-control" rows="3" placeholder="Введите ваше сообщение"></textarea>  
+    <textarea name="contact[message]" class="form-control" rows="3" placeholder="Введите ваше сообщение"></textarea>  
   </div>
   <button type="submit" class="btn btn-primary">Отправить</button>
 </form>
