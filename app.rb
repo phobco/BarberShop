@@ -4,21 +4,18 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'sinatra/activerecord'
 
-set :database, {adapter: "sqlite3", database: "barbershop.db"}
+set :database, { adapter: 'sqlite3', database: 'barbershop.db' }
 
 class Client < ActiveRecord::Base
   validates :name, presence: true, length: { minimum: 3 }
-  validates :phone, presence: true
-  validates :datestamp, presence: true
-  validates :color, presence: true
+  validates :phone, :datestamp, :color, presence: true
 end
 
 class Barber < ActiveRecord::Base
 end
 
 class Contact < ActiveRecord::Base
-  validates :mail, presence: true
-  validates :message, presence: true
+  validates :mail, :message, presence: true
 end
 
 before do
@@ -55,19 +52,19 @@ get '/client/:id' do
 end
 
 post '/visit' do
-
   @c = Client.new params[:client]
+  
   if @c.save
     erb "<h2>Спасибо, вы записались!</h2>"
   else
     @error = @c.errors.full_messages.first
     erb :visit
   end
-  end
+end
 
 post '/contacts' do
-   
    @c = Contact.new params[:contact]
+
    if @c.save
      erb "<h2>Готово!</h2>"
    else
